@@ -1,0 +1,20 @@
+def hash_function(word):
+    return sum(ord(char) for char in word)
+
+with open('/content/hw2_data.txt', 'r') as file:
+    content = file.read()
+words = content.split()
+
+word_count = {}
+for word in words:
+    word = word.strip(".,!?;:'\"")
+    word = word.lower()
+    hash_value = hash_function(word)
+    if hash_value in word_count:
+        word_count[hash_value][0] += 1
+    else:
+        word_count[hash_value] = [1, word]
+print("總共有 {} 個不重複的英文字。".format(len(word_count)))
+print("每個英文字出現的次數如下：")
+for hash_value, (count, word) in word_count.items():
+    print("單字 '{}' 出現了 {} 次。".format(word, count))
